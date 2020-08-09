@@ -1,0 +1,26 @@
+{
+  "name": "nebula",
+  "version": "1.0.0",
+  "description": "The Chat Server For Voxtl",
+  "main": "app.js",
+  "dependencies": {
+    "@fusionauth/typescript-client": "^1.18.0",
+    "dotenv": "^8.2.0",
+    "redis": "^3.0.2",
+    "ws": "^7.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Voxtl/Nebula.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Voxtl/Nebula/issues"
+  },
+  "homepage": "https://github.com/Voxtl/Nebula#readme"
+}
