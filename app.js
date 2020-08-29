@@ -92,9 +92,6 @@ wss.on('connection', function connection(ws, req) {
             // Check if guest connected.
             if(data.data === 'guest') {
                 viewer = 'guest';
-
-                // Add viewer to Redis list.
-                red.sadd(`stream:${channel}:viewers`, JSON.stringify(viewer));
             } else {
                 // Check if user is authenticated.
                 fusion.retrieveUserUsingJWT(data.data)
