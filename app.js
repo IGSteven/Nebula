@@ -104,7 +104,7 @@ wss.on('connection', function connection(ws, req) {
                             'username': ClientResponse.response.user.username
                         };
 
-                        ClientResponse.response.user.memberships.forEach(group => {
+                        ClientResponse.response.user.memberships?.forEach(group => {
                             fusion.retrieveGroup(group.groupId).then(groupInfo => {
                                 switch (groupInfo.response.group.name) {
                                     case 'Founder':
