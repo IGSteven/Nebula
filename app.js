@@ -92,9 +92,6 @@ wss.on('connection', function connection(ws, req) {
             // Check if guest connected.
             if(data.data === 'guest') {
                 viewer = 'guest';
-
-                // Add viewer to Redis list.
-                red.lpush(`stream:${channel}:viewers`, JSON.stringify(viewer));
             } else {
                 // Check if user is authenticated.
                 fusion.retrieveUserUsingJWT(data.data)
@@ -119,7 +116,7 @@ wss.on('connection', function connection(ws, req) {
                         });
 
                         // Add viewer to Redis list.
-                        red.lpush(`stream:${channel}:viewers`, JSON.stringify(viewer));
+                        red.sadd(`stream:${channel}:viewers`, JSON.stringify(viewer));
                     }).catch(error => {
                     console.log(error);
                     return ws.terminate();
@@ -171,7 +168,7 @@ wss.on('connection', function connection(ws, req) {
 
             // Remove client from redis list.
             try {
-                red.lrem(`stream:${channel}:viewers`, 1, JSON.stringify(viewer));
+                red.srem(`stream:${channel}:viewers`, 1, JSON.stringify(viewer));
             } catch(err) {
                 console.log(err);
             }
