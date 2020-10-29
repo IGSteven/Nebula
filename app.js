@@ -117,6 +117,12 @@ wss.on('connection', function connection(ws, req) {
 
                         // Add viewer to Redis list.
                         red.sadd(`stream:${channel}:viewers`, JSON.stringify(viewer));
+            
+                        // Send ready event.
+                        ws.send(JSON.stringify({
+                            'event': 'ready',
+                            'data': viewer
+                        }));
                     }).catch(error => {
                     console.log(error);
                     return ws.terminate();
