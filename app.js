@@ -121,7 +121,7 @@ wss.on('connection', function connection(ws, req) {
                         // Send ready event.
                         ws.send(JSON.stringify({
                             'event': 'ready',
-                            'data': 'authorised successfully'
+                            'data': viewer
                         }));
                     }).catch(error => {
                     console.log(error);
