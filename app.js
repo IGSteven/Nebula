@@ -4,6 +4,8 @@
 const WebSocket = require('ws');
 const Redis = require('redis');
 const { FusionAuthClient } = require('@fusionauth/typescript-client')
+const { UniqueID } = require('nodejs-snowflake');
+const msgid = new UniqueID(config);
 require('dotenv').config()
 
 // Setup FusionAuth client.
@@ -115,14 +117,14 @@ wss.on('connection', function connection(ws, req) {
                             });
                         });
 
-                        // Add viewer to Redis list.
-                        red.sadd(`stream:${channel}:viewers`, JSON.stringify(viewer));
-            
                         // Send ready event.
                         ws.send(JSON.stringify({
                             'event': 'ready',
                             'data': viewer
                         }));
+
+                        // Add viewer to Redis list.
+                        red.sadd(`stream:${channel}:viewers`, JSON.stringify(viewer));
                     }).catch(error => {
                     console.log(error);
                     return ws.terminate();
@@ -156,6 +158,8 @@ wss.on('connection', function connection(ws, req) {
                 pub.publish('chat', JSON.stringify({
                     'channel': channel,
                     'data': {
+                        'timestamp': Date(),
+                        'snowflake': uid.getUniqueID(),
                         'viewer': viewer,
                         'badges': badges,
                         'message': data.data
